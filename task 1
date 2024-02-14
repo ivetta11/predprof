@@ -1,0 +1,28 @@
+import csv
+
+
+x = [el[:-1] for el in open('/home/student/Загрузки/game.txt').readlines()]
+ans = []
+otvet = []
+
+for i in x:
+    a = i.split('$')
+    gamename = a[0]
+    characters = a[1]
+    nameerror = a[2]
+    date = a[3]
+    if '55' in nameerror:
+        ans.append(f'У персонажа {characters} в игре {gamename} нашлась ошибка с кодом: {nameerror}. Дата фиксации: {date}')
+        nameerror = 'Done'
+        date = '0000-00-00'
+        otvet.append([gamename, characters, nameerror, date])
+    else:
+        otvet.append([gamename, characters, nameerror, date])
+
+ 
+
+with open('game_new', 'w', encoding='utf8') as file:
+    writer = csv.DictWriter(file, delimiter=';', fieldnames=['GameName', 'characters', 'nameError', 'date'])
+    writer.writeheader()
+    writer.writerows(otvet)
+            
